@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">OneOkToDo</string>
+    <string name="weekday_1">星期一</string>
+    <string name="weekday_2">星期二</string>
+    <string name="weekday_3">星期三</string>
+    <string name="weekday_4">星期四</string>
+    <string name="weekday_5">星期五</string>
+    <string name="weekday_6">星期六</string>
+    <string name="weekday_7">星期日</string>
+</resources>

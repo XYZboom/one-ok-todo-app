@@ -2,6 +2,7 @@ package io.github.xyzboom.oneoktodo.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.onClick
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.kizitonwose.calendar.core.now
 import io.github.xyzboom.oneoktodo.Greeting
+import io.github.xyzboom.oneoktodo.model.Task
+import io.github.xyzboom.oneoktodo.model.TaskGroup
 import io.github.xyzboom.oneoktodo.utils.toReadableString
 import kotlinx.datetime.LocalDate
 import one_ok_todo.composeapp.generated.resources.Res
@@ -36,24 +44,28 @@ object HomeScreen: Screen {
 
     @Composable
     override fun Content() {
+        val groups = listOf(
+            TaskGroup("list 1", listOf(Task("task 1"), Task("task 2"))),
+            TaskGroup("list 2", listOf(Task("task 1"), Task("task 2")))
+        )
         MaterialTheme {
-            var showContent by remember { mutableStateOf(false) }
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .safeContentPadding()
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .padding(horizontal = 24.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.Start,
             ) {
-                // todo: 添加点击此行的跳转逻辑
-                TimeWithIcon()
-                Button(onClick = { showContent = !showContent }) {
-                    Text("Click me!")
+                item {
+                    TimeWithIcon(modifier = Modifier.clickable {
+                        // todo navigation is needed here
+                    })
                 }
-                AnimatedVisibility(showContent) {
-                    val greeting = remember { Greeting().greet() }
-                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        Text("Compose: $greeting")
+                for (group in groups) {
+                    item {
+                        Text(group.name)
+                    }
+                    items(group.tasks, /*todo specify key*/) { task ->
+                        TaskItem(task)
                     }
                 }
             }
@@ -62,8 +74,8 @@ object HomeScreen: Screen {
 }
 
 @Composable
-fun TimeWithIcon() {
-    Row {
+fun TimeWithIcon(modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
         Image(
             painterResource(Res.drawable.home), contentDescription = null,
             modifier = Modifier.height(40.dp)

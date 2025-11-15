@@ -12,13 +12,19 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        optIn.add("kotlin.time.ExperimentalTime")
+    }
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-
+    js {
+        nodejs()
+        generateTypeScriptDefinitions()
+    }
     jvm("desktop")
 
     sourceSets {

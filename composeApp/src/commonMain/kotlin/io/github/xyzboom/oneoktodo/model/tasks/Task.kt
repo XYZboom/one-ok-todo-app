@@ -1,4 +1,4 @@
-package io.github.xyzboom.oneoktodo.model
+package io.github.xyzboom.oneoktodo.model.tasks
 
 import kotlinx.datetime.LocalDate
 

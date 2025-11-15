@@ -2,10 +2,10 @@ package io.github.xyzboom.oneoktodo.utils
 
 import androidx.compose.runtime.Composable
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.DayOfWeek.*
 import one_ok_todo.composeapp.generated.resources.Res
 import one_ok_todo.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
-import java.time.DayOfWeek.*
 
 @Composable
 fun DayOfWeek.toReadableString(): String {
